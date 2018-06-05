@@ -19,9 +19,26 @@
 <ion-content padding>
   <ion-list>
     <ion-item-sliding *ngFor="let item of categories">
-      <ion-item><h2>{{item.label}}</h2></ion-item>
+      <ion-item  class="list-item">
+        <h2 justify-content-between class="row-cat">
+            <ion-grid>
+            <ion-row align-items-center>
+              <ion-col col-auto>
+                  <category-color-bullet [color]="item.color"></category-color-bullet>
+              </ion-col>
+              <ion-col style="flex:1">
+                  {{item.label}} 
+              </ion-col>
+              <ion-col style="flex-grow: initial" text-right>
+                <budget [budget]="item.budget"></budget>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+          <span></span>
+        </h2>
+      </ion-item>
       <ion-item-options side="right">
-        <button ion-button color="danger">
+        <button (click)="remove(item)" ion-button color="danger">
           <ion-icon name="trash"></ion-icon>
           Remove
         </button>

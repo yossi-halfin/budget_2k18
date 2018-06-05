@@ -1,0 +1,19 @@
+budget {
+    text-align: right;
+    // color: white;
+    // background: #00334d;
+    display: block;
+    // padding: 4px 0;
+    // min-width: 90px;
+    // width: 90px;
+    .budget-title{
+        font-size: 13px;
+    }
+    .budget-amount{
+        // font-weight: bold;
+        font-size: 14px;
+    }
+    .budget-icon{
+        font-size: 18px;
+    }
+}

@@ -17,7 +17,9 @@ import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { UserProvider } from '../providers/user/user';
 import { ComponentsModule } from '../components/components.module';
-
+import { CategoriesProvider } from '../providers/categories/categories';
+import { BrowserAnimationsModule, NoopAnimationsModule} from '@angular/platform-browser/animations';
+import { CommonProvider } from '../providers/common/common';
 
 @NgModule({
   declarations: [
@@ -35,7 +37,9 @@ import { ComponentsModule } from '../components/components.module';
     AngularFireModule.initializeApp(FIREBASE_CREDENTIALS),
     AngularFireDatabaseModule, 
     AngularFireAuthModule,
-    ComponentsModule
+    ComponentsModule,
+    BrowserAnimationsModule,
+    NoopAnimationsModule
 
   ],
   bootstrap: [IonicApp],
@@ -52,8 +56,9 @@ import { ComponentsModule } from '../components/components.module';
     SplashScreen,
     FirebaseAppProvider,
     UserProvider, 
-    {provide: ErrorHandler, useClass: IonicErrorHandler}
-
+    {provide: ErrorHandler, useClass: IonicErrorHandler},
+    CategoriesProvider,
+    CommonProvider
   ],
   schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
 

@@ -36,12 +36,12 @@ export class LoginPage {
     this.initForm();
   }
 
-  ionViewDidLoad() {
+  ionViewDidLoad(){
     this.menu.swipeEnable(false);
     this.asyncUserCall();
   }
 
-  async asyncUserCall() {
+  async asyncUserCall(){
     this.showLoader();
      this._onAuthStateChanged = await this.afAuth.auth.onAuthStateChanged((user)=> {
       const route  = this.navCtrl.getActive().name;
@@ -76,18 +76,13 @@ export class LoginPage {
       this.loginForm.getRawValue().user,
       this.loginForm.getRawValue().password
     ).then((res)=>{
-        ;
       this._userSrv.setUser({uid:res.uid, email:res.email, displayName:res.displayName});
-      
       this.setRoot();
       this.hideLoader();
     }).catch((err)=>{
       this.showError(err.message);
     })
-    
-
   }
-  
 
   register(){
     this.navCtrl.setRoot(RegisterPage, {}, {animate: true, direction: 'forward'});
@@ -98,7 +93,7 @@ export class LoginPage {
     this._onAuthStateChanged();
   }
 
-  showError(message) {
+  showError(message){
     let toast = this.toastCtrl.create({
       message,
       duration: 2500
@@ -119,6 +114,5 @@ export class LoginPage {
       this._loading.dismiss();
     }
   }
-
 
 }

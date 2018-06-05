@@ -16,3 +16,29 @@
 ion-input{
     border-bottom:1px solid color($colors, primary);
 }
+
+.label-md {
+    margin: 5px 0 5px 0;
+}
+.item-md.list-item{
+    padding-left: 0; 
+}
+.item-block {
+    &:last-child{
+        .item-inner{
+            border-bottom: 0;
+        }
+    }
+    .item-inner {
+        padding-right: 0; 
+    }
+}
+
+h3{
+    padding: 15px 0;
+    text-align: center;
+}
+// .item-md.item-block .item-inner {
+//     // padding-right: 8px;
+//     border-bottom: 0;
+// }

@@ -1,0 +1,32 @@
+<!-- Generated template for the NewExpenceComponent component -->
+<div padding>
+    <h3>Add Expense</h3>
+  
+    <form [formGroup]="form">
+      <ion-item>
+        <ion-label floating>Expense description:</ion-label>
+        <ion-input formControlName="label" type="text"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label floating>Expense category:</ion-label>
+        <ion-select formControlName="category">
+          <ion-option *ngFor="let cat of categories" [value]="cat.id">{{cat.label}}</ion-option> 
+        </ion-select>
+      </ion-item>
+      <ion-item>
+          <ion-label floating>Expense date:</ion-label>
+          <ion-input formControlName="date"  ng-readonly type="date"></ion-input>
+        </ion-item>
+      <ion-item>
+        <ion-label floating>Expense amount:</ion-label>
+        <ion-input formControlName="amount" type="number"></ion-input>
+      </ion-item>
+      <ion-item  text-center>
+          <button ion-button padding (click)="add()" full>Add Expense!</button>  
+      </ion-item>
+      <ion-item>
+          <button ion-button padding (click)="close()" full type="reset" color="secondary">Close</button>
+      </ion-item>
+    </form>
+  </div>
+  

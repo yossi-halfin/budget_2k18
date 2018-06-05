@@ -1,9 +1,12 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, LoadingController, ModalController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ModalController } from 'ionic-angular';
 import { AngularFireDatabase } from 'angularfire2/database';
 import { UserProvider } from '../../providers/user/user';
 import { isUndefined } from 'ionic-angular/util/util';
 import { AddCategoryComponent } from '../../components/add/add';
+import { ICategory } from '../../interfaces/iCat';
+import { CategoriesProvider } from '../../providers/categories/categories';
+import { CommonProvider } from '../../providers/common/common';
 
 /**
  * Generated class for the CategoriesPage page.
@@ -12,7 +15,6 @@ import { AddCategoryComponent } from '../../components/add/add';
  * Ionic pages and navigation.
  */
 
-interface ICategory {id:number, label:string, budget:number}
 
 @IonicPage()
 @Component({
@@ -22,46 +24,47 @@ interface ICategory {id:number, label:string, budget:number}
 export class CategoriesPage {
   private user;
   public categories:Array<ICategory>;
-  private _loading;
-
+  private dbRef; 
+  private subscribers;
   constructor(
+    private commonProvider:CommonProvider,
     private modalCtrl: ModalController,
+    private catProvider: CategoriesProvider,
     private userSrv: UserProvider,
-    private loadingCtrl: LoadingController,
     private fireBase: AngularFireDatabase,
     public navCtrl: NavController, 
     public navParams: NavParams) {
-      this.categories = [];
+      this.categories = this.subscribers = [];
       this.user = this.userSrv.getUser();
       this.getCategories();
-  }
+      this.dbRef = this.fireBase.list(`/users/${this.user.uid}/categories`);
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad CategoriesPage');
+      
   }
+ 
 
   getCategories(){
-    this.showLoader();
-    this.fireBase.list(`/users/${this.user.uid}/categories`).valueChanges().subscribe((res: ICategory[])=>{
-      this.categories = res;
-      this.hideLoader();
-    });
-  }
-
-  showLoader(){
-    this._loading = this.loadingCtrl.create({content: 'Please wait...'});
-    this._loading.present();
-  }
-
-  hideLoader(){
-    if(!isUndefined(this._loading)){
-      this._loading.dismiss();
-    }
+    this.commonProvider.showLoader();
+    this.subscribers.push(this.catProvider.categories.subscribe(items => {
+      this.categories = items;
+      this.commonProvider.hideLoader();
+    }));
   }
 
   addCategory(){
     let modal = this.modalCtrl.create(AddCategoryComponent);
     modal.present();
+  }
+
+  remove(item){
+    this.commonProvider.showLoader();
+    this.dbRef.remove(item.$key).then(()=>{
+      this.commonProvider.hideLoader();
+    });
+  }
+
+  ionViewWillUnload(){
+    this.subscribers.forEach(element => element.unsubscribe());
   }
   
 }

@@ -8,6 +8,8 @@ import { SettingsPage } from '../pages/settings/settings';
 import { LoginPage } from '../pages/login/login';
 import { Firebase } from '@ionic-native/firebase';
 import { AngularFireAuth } from 'angularfire2/auth';
+import { AngularFireDatabase } from 'angularfire2/database';
+import { UserProvider } from '../providers/user/user';
 
 
 @Component({
@@ -18,13 +20,18 @@ export class MyApp {
   rootPage: any = LoginPage; 
   pages: Array<{title: string, component?: any,icon:string}>;
   private _loading;
+  private user;
+
   constructor(
+    private fireBase: AngularFireDatabase,
     public loadingCtrl: LoadingController,
     private afAuth: AngularFireAuth,
     public platform: Platform, 
     public statusBar: StatusBar, 
+    private userSrv: UserProvider,
     public splashScreen: SplashScreen) {
     this.initializeApp();
+
 
     // used for an example of ngFor and navigation
     this.pages = [
@@ -35,13 +42,17 @@ export class MyApp {
     ];
 
   }
+ 
 
   initializeApp() {
+    
+
     this.platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
       this.statusBar.styleDefault();
       this.splashScreen.hide();
+
     });
   }
 
@@ -73,4 +84,5 @@ export class MyApp {
   hideLoader(){
     this._loading.dismiss();
   }
+
 }

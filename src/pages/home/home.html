@@ -1,21 +1,59 @@
 <ion-header>
-  <ion-navbar>
-    <button ion-button menuToggle>
-      <ion-icon name="menu"></ion-icon>
-    </button>
-    <ion-title  text-center>Home</ion-title>
-  </ion-navbar>
-</ion-header>
-
-<ion-content padding>
-  <h3>Ionic Menu Starter</h3>
-
-  <p>
-    If you get lost, the <a href="http://ionicframework.com/docs/v2">docs</a> will show you the way.
-  </p>
-
-
+    <ion-navbar>
+      <button ion-button menuToggle>
+        <ion-icon name="menu"></ion-icon>
+      </button>
+      <ion-title>Expences {{current_month}}</ion-title>
+    </ion-navbar>
+  </ion-header>
   
-  <button ion-button secondary menuToggle>Toggle Menu</button>
-</ion-content>
-
+  
+  <ion-content padding>
+    <ion-list>
+        <ion-item class="list-item" (click)="item.expand=!item.expand" *ngFor="let item of expenses">
+          <h2 justify-content-between class="row-cat">
+              <ion-grid>
+              <ion-row align-items-center>
+                <ion-col col-auto>
+                    <category-color-bullet [color]="item.color"></category-color-bullet>
+                </ion-col>
+                <ion-col style="flex:1">
+                    {{item.label}}
+                </ion-col>
+                <ion-col style="flex-grow: initial" text-right>
+                    <category-status 
+                    [data]="item">
+                </category-status>
+                </ion-col>
+              </ion-row>
+            </ion-grid>
+          </h2>
+          <ion-list *ngIf="item.expand">
+              <ion-item *ngFor="let subItem of item.expenses">
+                  <ion-row align-items-center>
+                      <ion-col>
+                          {{subItem.label}}
+                      </ion-col>
+                      <ion-col style="padding-right: 10px" text-right>
+                          {{subItem.amount}}
+                      </ion-col>
+                    </ion-row>
+              </ion-item>
+              <ion-item>
+                    <ion-row align-items-center>
+                        <ion-col>
+                            Sub Total:
+                        </ion-col>
+                        <ion-col style="padding-right: 10px" text-right>
+                            {{item.amount}}/{{item.budget}}
+                        </ion-col>
+                      </ion-row>
+                </ion-item>
+          </ion-list>
+        </ion-item> 
+    </ion-list>
+    <ion-fab right bottom>
+      <button (click)="addExpense()" ion-fab color="primary"><ion-icon name="add"></ion-icon></button>
+    </ion-fab>
+  </ion-content>
+  

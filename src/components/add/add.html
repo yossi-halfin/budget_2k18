@@ -1,5 +1,39 @@
 <!-- Generated template for the AddComponent component -->
 <div padding>
-  {{text}}
-  <button (click)="add()">close</button>
+  <h3>Add Category</h3>
+
+  <form [formGroup]="form">
+    <ion-item>
+      <ion-label floating>Category name:</ion-label>
+      <ion-input formControlName="label" type="text"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label floating>Category Color:</ion-label>
+      <!-- <ion-input formControlName="color" type="color"></ion-input> -->
+
+      <ion-select formControlName="color">
+        <ion-option value="red">Red</ion-option>
+        <ion-option value="green">Green</ion-option>
+        <ion-option value="blue">Blue</ion-option>
+        <ion-option value="black">Black</ion-option>
+        <ion-option value="blueviolet">Blueviolet</ion-option>
+        <ion-option value="darkcyan">Darkcyan</ion-option>
+        <ion-option value="orange">Orange</ion-option>
+        <ion-option value="brown">Brown</ion-option>
+        <ion-option value="gold">Gold</ion-option>
+        <ion-option value="silver">Silver</ion-option>
+      </ion-select>
+    </ion-item>
+    <ion-item>
+      <ion-label floating>Category budget:</ion-label>
+      <ion-input formControlName="budget" type="number"></ion-input>
+    </ion-item>
+   
+    <ion-item  text-center>
+        <button ion-button padding (click)="add()" full>Add Category!</button>  
+    </ion-item>
+    <ion-item>
+        <button ion-button padding (click)="close()" full type="reset" color="secondary">Close</button>
+    </ion-item>
+  </form>
 </div>
